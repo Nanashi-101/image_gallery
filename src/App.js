@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./assets/main.css";
+import Card from './components/card'
 
 function App() {
+  // Creating the states for the gallery
+  const [isloading, setIsLoading] = useState(true);
+  const [pics, setPics] = useState([]);
+  const [term, setTerm] = useState('');
+
+  // Creating the fetching part  using the useEffect
+  useEffect(() => {
+    let url = `https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${term}&image_type=photo&pretty=true`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setPics(data.hits);
+        setIsLoading(false);
+      })
+      .catch(err => console.error(err))
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto my-5">
+      <div className="grid grid-cols-3 gap-4">
+        {pics.map(image => (
+          (image.previewHeight >= 150)?<Card key={image.id} image={image} />:null
+        ))}
+      </div>
     </div>
   );
 }
