@@ -3,8 +3,7 @@ import React from 'react'
 function card({ image }) {
     const tags = image.tags.split(',');
     return (
-        <div>
-            <>
+        <div className='flex flex-col items-center'>
                 <div className="Card max-w-md h-96 object-cover rounded-md overflow-hidden shadow-lg">
                     <img
                         src={image.webformatURL}
@@ -12,7 +11,7 @@ function card({ image }) {
                         className="card-img w-full"
                     />
                 </div>
-                <div className="card-content px-6 py-4 shadow-lg rounded-t-xl w-96 -translate-y-8 translate-x-8 bg-white">
+                <div className="card-content px-6 py-4 shadow-lg rounded-t-xl w-96 -translate-y-8 bg-white">
                     <p className="font-bold text-xl text-blue-700 text-center">
                         Photo by {image.user}
                     </p>
@@ -35,7 +34,6 @@ function card({ image }) {
                         ))}
                     </div>
                 </div>
-            </>
         </div>
     )
 }
